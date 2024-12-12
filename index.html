@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eredmények</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+
+        header {
+            background-color: #343a40;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .search-bar {
+            margin: 20px auto;
+            max-width: 600px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .search-bar input[type="text"] {
+            width: 80%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .search-bar button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .search-bar button:hover {
+            background-color: #0056b3;
+        }
+
+        .results {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .results table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .results th, .results td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .results th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .results tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .add-result {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .add-result input, .add-result select, .add-result button {
+            margin: 10px 0;
+            padding: 10px;
+            width: calc(100% - 22px);
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .add-result button {
+            background-color: #28a745;
+            color: white;
+            cursor: pointer;
+        }
+
+        .add-result button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Eredmények</h1>
+        <p>Élő sporteredmények és statisztikák</p>
+    </header>
+
+    <div class="search-bar">
+        <input type="text" placeholder="Keresés...">
+        <button>Keresés</button>
+    </div>
+
+    <div class="results">
+        <table>
+            <thead>
+                <tr>
+                    <th>Idő</th>
+                    <th>Mérkőzés</th>
+                    <th>Eredmény</th>
+                    <th>Státusz</th>
+                </tr>
+            </thead>
+            <tbody id="results-body">
+                <tr>
+                    <td>18:00</td>
+                    <td>Csapat A - Csapat B</td>
+                    <td>2 - 1</td>
+                    <td>Befejeződött</td>
+                </tr>
+                <tr>
+                    <td>19:00</td>
+                    <td>Csapat C - Csapat D</td>
+                    <td>1 - 1</td>
+                    <td>Folyamatban</td>
+                </tr>
+                <tr>
+                    <td>20:30</td>
+                    <td>Csapat E - Csapat F</td>
+                    <td>-</td>
+                    <td>Következik</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="add-result">
+        <h2>Új eredmény hozzáadása</h2>
+        <input type="text" id="match-time" placeholder="Idő (pl. 18:00)">
+        <input type="text" id="match-teams" placeholder="Mérkőzés (pl. Csapat A - Csapat B)">
+        <input type="text" id="match-score" placeholder="Eredmény (pl. 2 - 1)">
+        <select id="match-status">
+            <option value="Befejeződött">Befejeződött</option>
+            <option value="Folyamatban">Folyamatban</option>
+            <option value="Következik">Következik</option>
+        </select>
+        <button onclick="addResult()">Hozzáadás</button>
+    </div>
+
+    <script>
+        function addResult() {
+            const time = document.getElementById('match-time').value;
+            const teams = document.getElementById('match-teams').value;
+            const score = document.getElementById('match-score').value;
+            const status = document.getElementById('match-status').value;
+
+            if (time && teams && score && status) {
+                const tableBody = document.getElementById('results-body');
+                const newRow = document.createElement('tr');
+
+                newRow.innerHTML = `
+                    <td>${time}</td>
+                    <td>${teams}</td>
+                    <td>${score}</td>
+                    <td>${status}</td>
+                `;
+
+                tableBody.appendChild(newRow);
+
+                // Clear inputs
+                document.getElementById('match-time').value = '';
+                document.getElementById('match-teams').value = '';
+                document.getElementById('match-score').value = '';
+                document.getElementById('match-status').value = 'Befejeződött';
+            } else {
+                alert('Kérlek, töltsd ki az összes mezőt!');
+            }
+        }
+    </script>
+</body>
+</html>
